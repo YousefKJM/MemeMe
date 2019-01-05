@@ -10,16 +10,18 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Meme Editor View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MemeEditorViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k0r-AA-ZHC">
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRH-O1-WP4">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
@@ -27,16 +29,19 @@
                                     <constraint firstAttribute="height" constant="44" id="cTE-KU-1Cm"/>
                                 </constraints>
                                 <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="L89-tG-n9o"/>
                                     <barButtonItem title="Pick" id="MRb-ce-zBp">
                                         <connections>
                                             <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="qDS-QG-uYU"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="mbQ-mC-zYm"/>
                                     <barButtonItem title="Camera" id="icV-K5-9fJ">
                                         <connections>
                                             <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="OpV-P6-cCL"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="wf3-Aa-zkT"/>
                                 </items>
                             </toolbar>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TOP TEXT" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cw1-UR-aSC">
@@ -63,7 +68,18 @@
                                     <constraint firstAttribute="height" constant="44" id="Q7W-QI-IIK"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Title" id="FHR-xg-3pA"/>
+                                    <navigationItem title="MemeMe" id="FHR-xg-3pA">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="lur-7R-CxY">
+                                            <connections>
+                                                <action selector="onCancelClicked:" destination="BYZ-38-t0r" id="MMK-u3-wKI"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Share" id="g3f-j1-LFp">
+                                            <connections>
+                                                <action selector="onShareClicked:" destination="BYZ-38-t0r" id="Q2Y-xz-PVE"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -91,7 +107,11 @@
                     <connections>
                         <outlet property="bottomTextField" destination="vl6-Ky-xvN" id="xhe-Im-swM"/>
                         <outlet property="cameraButton" destination="icV-K5-9fJ" id="RBe-On-KbJ"/>
+                        <outlet property="cancelButton" destination="lur-7R-CxY" id="PzW-b0-fsk"/>
                         <outlet property="imagePickerView" destination="k0r-AA-ZHC" id="7Lz-2G-XQs"/>
+                        <outlet property="navBar" destination="8Cv-lr-J22" id="F2k-gZ-hrH"/>
+                        <outlet property="shareButton" destination="g3f-j1-LFp" id="ptk-Dx-jB2"/>
+                        <outlet property="toolBar" destination="eRH-O1-WP4" id="I8L-Oa-q5J"/>
                         <outlet property="topTextField" destination="Cw1-UR-aSC" id="EwN-X1-iPP"/>
                     </connections>
                 </viewController>

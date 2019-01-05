@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeEditorViewController.swift
 //  MemeMe
 //
 //  Created by Yousef Majeed on 29/04/1440 AH.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate , UITextFieldDelegate {
+class MemeEditorViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate , UITextFieldDelegate {
 
     let DEFAULT_TOP_TEXT = "TOP TEXT"
     let DEFAULT_BOTTOM_TEXT = "BOTTOM TEXT"
@@ -19,10 +19,22 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate , UINav
         NSAttributedString.Key.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSAttributedString.Key.strokeWidth.rawValue: -3.0]
     
+    @IBOutlet weak var navBar: UINavigationBar!
+    
+    
     @IBOutlet weak var imagePickerView: UIImageView!
-    @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
+    
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
+
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
+    @IBOutlet weak var toolBar: UIToolbar!
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +82,45 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate , UINav
         present(imagePicker, animated: true, completion: nil)
     }
 
+    // MARK: NavigationBar Button Outlets
+    @IBAction func onShareClicked(_ sender: Any) {
+        // Create MemeObject
+        let memedImage = generateMemedImage()
+        let itemsToShare = [ memedImage ]
+        
+        // Set up activity view controller
+        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        
+        // Set completion
+        activityViewController.completionWithItemsHandler = { (_, completed, _,  _) in
+            if !completed {
+                return
+            }
+            
+            let meme = MemeObject(
+                topText: self.topTextField.text!,
+                bottomText: self.bottomTextField.text!,
+                originalImage: self.imagePickerView.image!,
+                memedImage: memedImage
+            )
+            
+            // Save meme
+            MemeStorage.addMeme(meme)
+        
+        }
+        
+        // present the view controller
+        self.present(activityViewController, animated: true)
+    }
+    
+    
+    @IBAction func onCancelClicked(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+
+        
+    }
+    
     
     // MARK: UIImagePickerControllerDelegate methods
     
@@ -96,7 +147,8 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate , UINav
         present(alertController, animated: true, completion: nil)
     }
     
-    
+    // MARK: UITextField Delegate methods
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if (topTextField == textField && topTextField.text == DEFAULT_TOP_TEXT) {
             topTextField.text = ""
@@ -111,7 +163,8 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate , UINav
     }
     
     
-    
+    // MARK: Keyboard related methods
+
     func subscribeToKeyboardNotifications() {
 
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -141,15 +194,36 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate , UINav
         
     }
 
-    
-    
-
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
 
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.cgRectValue.height
     }
+    
+    // MARK: Meme sharing methods
+    
+    func generateMemedImage() -> UIImage {
+        // Hide NavigationBar and Toolbar
+        toggleExtraViews(hide: true)
+        
+        // Render view to an image
+        UIGraphicsBeginImageContext(view.bounds.size)
+        view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        // Show 'em again
+        toggleExtraViews(hide: false)
+        
+        return memedImage
+    }
+    
+    private func toggleExtraViews(hide: Bool) {
+        navBar.isHidden = hide
+        toolBar.isHidden = hide
+    }
+
  
 }
 
