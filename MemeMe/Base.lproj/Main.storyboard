@@ -19,37 +19,71 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k0r-AA-ZHC">
-                                <rect key="frame" x="67" y="269" width="241" height="129"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="603"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRH-O1-WP4">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
                                     <barButtonItem title="Pick" id="MRb-ce-zBp">
                                         <connections>
-                                            <action selector="pickAnImage:" destination="BYZ-38-t0r" id="Ixy-iL-Rcm"/>
+                                            <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="qDS-QG-uYU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Camera" id="icV-K5-9fJ">
+                                        <connections>
+                                            <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="OpV-P6-cCL"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TOP TEXT" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cw1-UR-aSC">
+                                <rect key="frame" x="16" y="50" width="343" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="343" id="iJr-3f-FHV"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="BOTTOM TEXT" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vl6-Ky-xvN">
+                                <rect key="frame" x="16" y="584" width="343" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="343" id="NwD-9E-62x"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="k0r-AA-ZHC" firstAttribute="centerX" secondItem="eRH-O1-WP4" secondAttribute="centerX" id="3PZ-ef-mia"/>
-                            <constraint firstItem="k0r-AA-ZHC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="249" id="3hc-oq-zCO"/>
-                            <constraint firstItem="k0r-AA-ZHC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="67" id="9i4-xp-iWo"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vl6-Ky-xvN" secondAttribute="trailing" symbolic="YES" id="2hv-NW-wOS"/>
+                            <constraint firstItem="vl6-Ky-xvN" firstAttribute="leading" secondItem="Cw1-UR-aSC" secondAttribute="leading" id="4zV-tz-Yld"/>
+                            <constraint firstItem="Cw1-UR-aSC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="8In-i4-DW8"/>
+                            <constraint firstAttribute="bottom" secondItem="vl6-Ky-xvN" secondAttribute="bottom" constant="69" id="KXp-uE-pSd"/>
                             <constraint firstItem="eRH-O1-WP4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LR4-tB-jO9"/>
-                            <constraint firstItem="eRH-O1-WP4" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Wtp-6z-CIK"/>
-                            <constraint firstItem="k0r-AA-ZHC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cAH-iL-GKa"/>
+                            <constraint firstItem="k0r-AA-ZHC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="U7o-tC-n1F"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Cw1-UR-aSC" secondAttribute="trailing" constant="16" id="Xw8-cP-iRH"/>
+                            <constraint firstItem="Cw1-UR-aSC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="jA7-H3-67R"/>
+                            <constraint firstItem="k0r-AA-ZHC" firstAttribute="centerX" secondItem="eRH-O1-WP4" secondAttribute="centerX" id="lnJ-r2-obr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Cw1-UR-aSC" secondAttribute="trailing" constant="16" id="o8X-lt-DCC"/>
                             <constraint firstItem="eRH-O1-WP4" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="r1L-ay-Rxg"/>
+                            <constraint firstItem="k0r-AA-ZHC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="s6e-Ti-o8K"/>
+                            <constraint firstItem="k0r-AA-ZHC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-12" id="wfi-sb-y1x"/>
+                            <constraint firstItem="eRH-O1-WP4" firstAttribute="top" secondItem="vl6-Ky-xvN" secondAttribute="bottom" constant="25" id="x2e-aD-LfT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="bottomTextField" destination="vl6-Ky-xvN" id="xhe-Im-swM"/>
+                        <outlet property="cameraButton" destination="icV-K5-9fJ" id="RBe-On-KbJ"/>
                         <outlet property="imagePickerView" destination="k0r-AA-ZHC" id="7Lz-2G-XQs"/>
+                        <outlet property="topTextField" destination="Cw1-UR-aSC" id="EwN-X1-iPP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="53.600000000000001" y="47.226386806596707"/>
         </scene>
     </scenes>
 </document>
