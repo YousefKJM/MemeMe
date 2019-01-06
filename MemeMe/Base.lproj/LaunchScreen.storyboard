@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,13 +17,46 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launcher" translatesAutoresizingMaskIntoConstraints="NO" id="wm0-0F-md4">
+                                <rect key="frame" x="130" y="276" width="115" height="115"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed by YousefKJM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7R-Ia-rSE">
+                                <rect key="frame" x="82" y="427" width="213" height="21"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meme Me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oc1-uA-dm9">
+                                <rect key="frame" x="144" y="399" width="87" height="20"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wm0-0F-md4" firstAttribute="centerX" secondItem="oc1-uA-dm9" secondAttribute="centerX" id="23C-9t-WWz"/>
+                            <constraint firstItem="wm0-0F-md4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="256" id="9UY-YE-Pbq"/>
+                            <constraint firstItem="oc1-uA-dm9" firstAttribute="top" secondItem="wm0-0F-md4" secondAttribute="bottom" constant="8" symbolic="YES" id="Ck5-JC-Uhd"/>
+                            <constraint firstItem="u7R-Ia-rSE" firstAttribute="centerX" secondItem="oc1-uA-dm9" secondAttribute="centerX" constant="1" id="Exu-XR-CqP"/>
+                            <constraint firstItem="u7R-Ia-rSE" firstAttribute="top" secondItem="oc1-uA-dm9" secondAttribute="bottom" constant="8" symbolic="YES" id="GSd-CE-8Np"/>
+                            <constraint firstItem="oc1-uA-dm9" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="PvU-lH-FKJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oc1-uA-dm9" secondAttribute="bottom" constant="248" id="Qjb-IR-0lD"/>
+                            <constraint firstItem="wm0-0F-md4" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="RXA-Gf-RYX"/>
+                            <constraint firstItem="wm0-0F-md4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="130" id="T2z-g0-dVj"/>
+                            <constraint firstItem="oc1-uA-dm9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="144" id="r8i-lA-fgS"/>
+                            <constraint firstItem="u7R-Ia-rSE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="82" id="yyw-aG-X4g"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="launcher" width="18.897638320922852" height="18.897638320922852"/>
+    </resources>
 </document>
