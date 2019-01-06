@@ -10,6 +10,23 @@ import UIKit
 
 class MemeEditorViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate , UITextFieldDelegate {
 
+
+    //Outlets
+    @IBOutlet weak var navBar: UINavigationBar!
+    
+    @IBOutlet weak var imagePickerView: UIImageView!
+    @IBOutlet weak var topTextField: UITextField!
+    @IBOutlet weak var bottomTextField: UITextField!
+
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
+
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
+    @IBOutlet weak var toolBar: UIToolbar!
+    
+    
+    //Variables/Constants
     let DEFAULT_TOP_TEXT = "TOP TEXT"
     let DEFAULT_BOTTOM_TEXT = "BOTTOM TEXT"
     
@@ -19,23 +36,11 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
         NSAttributedString.Key.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSAttributedString.Key.strokeWidth.rawValue: -3.0]
     
-    @IBOutlet weak var navBar: UINavigationBar!
+    var isEdited = false
+    var isShared = false
     
     
-    @IBOutlet weak var imagePickerView: UIImageView!
-    @IBOutlet weak var topTextField: UITextField!
-    @IBOutlet weak var bottomTextField: UITextField!
-    
-    @IBOutlet weak var cameraButton: UIBarButtonItem!
-
-    @IBOutlet weak var shareButton: UIBarButtonItem!
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    
-    @IBOutlet weak var toolBar: UIToolbar!
-    
-    
-    
-    
+    //Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -43,6 +48,8 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
         configure(topTextField)
         configure(bottomTextField)
         
+        // Set suitable View state
+        setViewState(.BLANK)
     }
     
     func configure(_ textField: UITextField) -> Void {
@@ -58,29 +65,27 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
  
     }
     
-    
     override func viewWillDisappear(_ animated: Bool) {
-        
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
     }
 
+    // MARK: Image picker methods
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
+        launchImagePicker(.photoLibrary)
     }
-    
     
     @IBAction func pickAnImageFromCamera(_ sender: Any) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        present(imagePicker, animated: true, completion: nil)
+        launchImagePicker(.camera)
     }
+    
+    func launchImagePicker(_ source: UIImagePickerController.SourceType) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = source
+        imagePickerController.delegate = self
+        self.present(imagePickerController, animated: true, completion: nil)
+    }
+    
 
     // MARK: NavigationBar Button Outlets
     @IBAction func onShareClicked(_ sender: Any) {
@@ -107,6 +112,15 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
             
             // Save meme
             MemeStorage.addMeme(meme)
+            
+            
+            self.isShared = true
+            let alertMessage = "Meme was saved successfully."
+            
+            let alertController = UIAlertController(title: "Meme Saved", message: alertMessage , preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
         
         }
         
@@ -116,9 +130,23 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
     
     
     @IBAction func onCancelClicked(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-
+        if !isEdited || isShared {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
         
+        let alertController = UIAlertController(title: "Cancel Editing", message: "All the changes will be lost and Meme will reset. Are you sure?", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("No", comment: "No, go back to editor."), style: .default,
+                                                handler: {(action:UIAlertAction!) in
+                                                    
+        }))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: "Reset editor."), style: .destructive,
+                                                handler: {(action:UIAlertAction!) in
+                                                    self.setViewState(.BLANK)
+                                                    self.dismiss(animated: true, completion: nil)
+        }))
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     
@@ -131,11 +159,11 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             imagePickerView.image = image
             picker.dismiss(animated: true, completion: nil)
-//            if (topTextField.text != DEFAULT_TOP_TEXT) && (bottomTextField.text != DEFAULT_BOTTOM_TEXT ) {
-//                setViewState(.MEME_COMPLETE)
-//            } else {
-//                setViewState(.MEME_EDITING)
-//            }
+            if (topTextField.text != DEFAULT_TOP_TEXT) && (bottomTextField.text != DEFAULT_BOTTOM_TEXT ) {
+                setViewState(.MEME_COMPLETE)
+            } else {
+                setViewState(.MEME_EDITING)
+            }
         }
     }
     
@@ -160,6 +188,47 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
+    }
+    
+    
+    // MARK: View State helper functions
+    
+    enum ViewState {
+        case BLANK
+        case MEME_EDITING
+        case MEME_COMPLETE
+    }
+    
+    func setViewState(_ state: ViewState) {
+        switch state {
+        case .MEME_EDITING:
+            topTextField.isEnabled = true
+            bottomTextField.isEnabled = true
+            topTextField.alpha = 1.0
+            bottomTextField.alpha = 1.0
+            shareButton.isEnabled = false
+            isEdited = true
+            break
+        case .MEME_COMPLETE:
+            topTextField.isEnabled = true
+            bottomTextField.isEnabled = true
+            shareButton.isEnabled = true
+            isEdited = true
+            break
+        default: // BLANK
+            topTextField.isEnabled = false
+            bottomTextField.isEnabled = false
+            topTextField.alpha = 0.5
+            bottomTextField.alpha = 0.5
+            shareButton.isEnabled = false
+            // Set to Defaults
+            imagePickerView.image = nil
+            topTextField.text = DEFAULT_TOP_TEXT
+            bottomTextField.text = DEFAULT_BOTTOM_TEXT
+            isEdited = false
+            isShared = false
+            break
+        }
     }
     
     
@@ -226,10 +295,6 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
 
  
 }
-
-
-
-
 
 
 
