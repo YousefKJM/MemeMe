@@ -176,6 +176,12 @@ class MemeEditorViewController: UIViewController , UIImagePickerControllerDelega
     }
     
     // MARK: UITextField Delegate methods
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if (topTextField.text != DEFAULT_TOP_TEXT) && (bottomTextField.text != DEFAULT_BOTTOM_TEXT ) {
+            setViewState(.MEME_COMPLETE)
+        }
+    }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if (topTextField == textField && topTextField.text == DEFAULT_TOP_TEXT) {
