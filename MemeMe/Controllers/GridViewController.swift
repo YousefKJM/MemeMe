@@ -94,11 +94,7 @@ class GridViewController: UICollectionViewController, UICollectionViewDelegateFl
         return sectionInsets
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
-    }
+ 
 
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
