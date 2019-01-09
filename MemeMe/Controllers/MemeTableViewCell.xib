@@ -45,7 +45,7 @@
                 <outlet property="memeImageView" destination="L6U-En-hMc" id="2qj-gx-E7t"/>
                 <outlet property="memeTitleLabel" destination="yhc-bx-FFS" id="isq-BH-3nR"/>
             </connections>
-            <point key="canvasLocation" x="124" y="112"/>
+            <point key="canvasLocation" x="124" y="111.54422788605699"/>
         </tableViewCell>
     </objects>
 </document>
