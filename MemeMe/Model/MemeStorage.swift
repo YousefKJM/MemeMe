@@ -6,7 +6,6 @@
 //  Copyright © 1440 YousefKJM. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MemeStorage: NSObject {

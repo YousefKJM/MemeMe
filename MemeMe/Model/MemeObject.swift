@@ -7,13 +7,12 @@
 //
 
 
-import Foundation
 import UIKit
 
 struct MemeObject {
-    var topText: String
-    var bottomText: String
-    var originalImage: UIImage
-    var memedImage: UIImage
+    let topText: String
+    let bottomText: String
+    let originalImage: UIImage
+    let memedImage: UIImage
 }
 
